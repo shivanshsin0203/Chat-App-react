@@ -1,18 +1,29 @@
-const express=require('express');
-const http=require('http');
-const socketio=require('socket.io');
-const app=express();
-const server=http.createServer(app);
-const io=socketio(server);
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 
-io.on('connection',(socket)=>{
-    console.log('a user connected '+socket.id);
-       socket.on('msg_send',async (data)=>{
-        console.log(data);
-       })
+const app = express();
+const httpServer = http.createServer(app);
+
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
 });
 
-server.listen(3001,async()=>{
-    console.log('Server started at 3001');
-   
-})
+io.on('connection', (socket) => {
+  console.log('a user connected ' + socket.id);
+
+  socket.on('msg_send', (data) => {
+    console.log(data);
+    // Handle the received data here
+  });
+});
+
+const PORT = process.env.PORT || 3001;
+
+httpServer.listen(PORT, () => {
+  console.log(`Server started at ${PORT}`);
+});
