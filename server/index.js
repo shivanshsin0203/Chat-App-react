@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
 
   socket.on('msg_send', (data) => {
     console.log(data);
-    // Handle the received data here
+    io.emit('msg_rvd',data)
   });
 });
 
