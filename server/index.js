@@ -15,7 +15,10 @@ const io = new Server(httpServer, {
 
 io.on('connection', (socket) => {
   console.log('a user connected ' + socket.id);
-
+  socket.on('join_room',(data)=>{
+    console.log("joining room "+data.roomid)
+    socket.join(data.roomid)
+})
   socket.on('msg_send', (data) => {
     console.log(data);
     io.emit('msg_rvd',data)
