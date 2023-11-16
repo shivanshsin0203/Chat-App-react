@@ -10,6 +10,7 @@ const io = new Server(httpServer, {
     origin: "http://localhost:3000",
     allowedHeaders: ["my-custom-header"],
     credentials: true
+    
   }
 });
 
